@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.IO.Ports;
+using Newtonsoft.Json.Linq;
 
 public class Trombonette : MonoBehaviour
 {
+    [Header("Debug")]
+    TMPro.TextMeshProUGUI textDebug;
+
     [Header("Conx Params")]
     [SerializeField] string COMName = "COM A";
     [SerializeField] int COMBitrate = 9600;
@@ -10,9 +14,11 @@ public class Trombonette : MonoBehaviour
 
     public void OpenCOM()
     {
+        print("Open..");
         serial = new SerialPort(COMName, COMBitrate);
         serial.Open();
     }
+
 
     public void CloseCOM()
     {
@@ -21,18 +27,16 @@ public class Trombonette : MonoBehaviour
 
     void Start()
     {
-        serial = new SerialPort();
+        serial = null;
+        OpenCOM();
     }
 
     void Update()
     {
         if (serial == null || !serial.IsOpen) return;
-        serial.DataReceived += DataReceived;
 
-    }
+        JObject obj = JObject.Parse(serial.ReadLine());
+        textDebug.text = $"data: {obj}";
 
-    private void DataReceived(object sender, SerialDataReceivedEventArgs e)
-    {
-        throw new System.NotImplementedException();
     }
 }
