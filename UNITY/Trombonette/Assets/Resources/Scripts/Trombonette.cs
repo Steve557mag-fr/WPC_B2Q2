@@ -1,15 +1,16 @@
 using UnityEngine;
 using System.IO.Ports;
 using Newtonsoft.Json.Linq;
+using System.Runtime.Serialization.Formatters;
 
 public class Trombonette : MonoBehaviour
 {
     [Header("Debug")]
-    TMPro.TextMeshProUGUI textDebug;
+    [SerializeField] TMPro.TextMeshProUGUI textDebug;
 
     [Header("Conx Params")]
-    [SerializeField] string COMName = "COM A";
-    [SerializeField] int COMBitrate = 9600;
+    [SerializeField] internal string COMName = "COM A";
+    [SerializeField] internal int COMBitrate = 9600;
     SerialPort serial;
 
     public void OpenCOM()

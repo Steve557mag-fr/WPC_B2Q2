@@ -617,6 +617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3227285397fd2ba418ccf06f6bd93d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textDebug: {fileID: 2121496204}
   COMName: COM3
   COMBitrate: 9600
 --- !u!4 &1635297019
