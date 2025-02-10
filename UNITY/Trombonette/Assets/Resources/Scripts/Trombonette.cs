@@ -27,8 +27,12 @@ public class Trombonette : MonoBehaviour
     void Update()
     {
         if (serial == null || !serial.IsOpen) return;
+        serial.DataReceived += DataReceived;
 
+    }
 
-
+    private void DataReceived(object sender, SerialDataReceivedEventArgs e)
+    {
+        throw new System.NotImplementedException();
     }
 }
