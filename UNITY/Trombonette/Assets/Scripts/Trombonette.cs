@@ -1,14 +1,22 @@
 using UnityEngine;
+using System.IO.Ports;
 
 public class Trombonette : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Header("Conx Params")]
+    [SerializeField] string COMName = "COM A";
+    [SerializeField] int COMBitrate = 9600;
+
+    GameObject partA;
+    GameObject partB;
+    GameObject partC;
+
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         
