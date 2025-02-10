@@ -1,9 +1,9 @@
 
 #include <Arduino_JSON.h>
 
-#define A 48    // A : bouton A (digital  ; bool)
-#define B 50    // b : bouton B (digital  ; bool)
-#define C 52    // c : bouton C (digidal  ; bool)
+#define A 41    // A : bouton A (digital  ; bool)
+#define B 39    // b : bouton B (digital  ; bool)
+#define C 37    // c : bouton C (digidal  ; bool)
 #define D 0     // d : coulisse (analog   ; int)
 
 void setup() {
@@ -19,11 +19,12 @@ void setup() {
 void loop() {
 
   JSONVar data = JSONVar();
-  data["A"] = digitalRead(A) == HIGH;
-  data["B"] = digitalRead(B) == HIGH;
-  data["C"] = digitalRead(C) == HIGH;
+  data["A"] = digitalRead(A);
+  data["B"] = digitalRead(B);
+  data["C"] = digitalRead(C);
   data["D"] = analogRead(D);
   Serial.println(data);
 
+  delay(1000/2);
 
 }

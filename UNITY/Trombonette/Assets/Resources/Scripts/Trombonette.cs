@@ -34,6 +34,11 @@ public class Trombonette : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Space)) {
+            CloseCOM();
+            print("closed!");
+        }
+
         if (serial == null || !serial.IsOpen) return;
 
         JObject obj = JObject.Parse(serial.ReadLine());
