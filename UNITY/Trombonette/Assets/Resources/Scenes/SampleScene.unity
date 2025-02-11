@@ -654,10 +654,10 @@ MonoBehaviour:
     isBHold: 0
     isCHold: 0
     slideLevel: 0
-  - isAHold: 0
+  - isAHold: 1
     isBHold: 0
-    isCHold: 0
-    slideLevel: 0
+    isCHold: 1
+    slideLevel: 38.9
   maxTime: 4
   trombonette: {fileID: 1635297018}
   ui: {fileID: 0}
