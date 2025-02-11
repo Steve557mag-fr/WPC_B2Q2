@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.IO.Ports;
 using Newtonsoft.Json.Linq;
-using System.Runtime.Serialization.Formatters;
 
 public class Trombonette : MonoBehaviour
 {
@@ -12,6 +11,10 @@ public class Trombonette : MonoBehaviour
     [SerializeField] internal string COMName = "COM A";
     [SerializeField] internal int COMBitrate = 9600;
     SerialPort serial;
+
+    internal bool isAHold, isBHold, isCHold;
+    internal int slideValue;
+    const int MAX_SLIDE_VALUE = 663;
 
     public void OpenCOM()
     {
@@ -44,5 +47,23 @@ public class Trombonette : MonoBehaviour
         JObject obj = JObject.Parse(serial.ReadLine());
         textDebug.text = $"data: {obj}";
 
+        isAHold = (bool)obj["A"];
+        isBHold = (bool)obj["B"];
+        isCHold = (bool)obj["C"];
+
+        slideValue = (int)((int)obj["D"]/(float)MAX_SLIDE_VALUE) * 100;
+        
     }
+
+    internal Combinaison GetCombinaison()
+    {
+        return new Combinaison()
+        {
+            isAHold = isAHold,
+            isBHold = isBHold,
+            isCHold = isCHold,
+            slideLevel = slideValue
+        };
+    }
+
 }
