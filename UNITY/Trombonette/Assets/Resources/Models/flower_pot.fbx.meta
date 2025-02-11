@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 60268dd3a49604342a2e84c9579fdc74
+guid: 584f356bf2ee450409846f31a2163789
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Argent
-    second: {fileID: 2100000, guid: 54a59627d32c5864b9f8c96b1bbb0bd6, type: 2}
+      name: Material.003
+    second: {fileID: 2100000, guid: c3e045f4b8ae20f4eb8569d6a1e24fe7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Or
-    second: {fileID: 2100000, guid: 2f73d1daa8f5bc7409f67f42e523f4de, type: 2}
+      name: Material.004
+    second: {fileID: 2100000, guid: 79102f122bca2db48a3541d8fbdda47e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: 3d89d43f04bd91644938edd57aca37b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: 97fe46c73ef2baa43847ab78f39107c4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
