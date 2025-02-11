@@ -16,18 +16,14 @@ public class GameManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CreateTile()
     {
-        spawnTimer += 1 * Time.deltaTime;
-
-        //Debug.Log(spawnTimer);
-
-        if (spawnTimer % 4  == 0 )
-        {
-            Debug.Log("Spawn");
-            int rand = Random.Range(0, tiles.Count);
-            Instantiate(tiles[rand], spawnPoint);
-        }
+        int rand = Random.Range(0, tiles.Count);
+        Instantiate(tiles[rand], spawnPoint);
     }
+
+
+
+    static internal GameManager instance => FindAnyObjectByType<GameManager>();
+
 }

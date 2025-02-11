@@ -5,14 +5,20 @@ public class Tile : MonoBehaviour
 
     internal Vector3 endPosition = new Vector3(22f, 0.0f, 0.0f);
 
-    public float lifetime;
+    public float speed = 1;
+
+    private void Start()
+    {
+        
+    }
 
     void Update()
     {
-        transform.LeanMove(endPosition, lifetime).setEase(LeanTweenType.linear);
+        transform.position += Vector3.right * speed * Time.deltaTime;
         if(Vector3.Distance(endPosition, transform.position) < 0.5f) 
         {
-            Destroy(gameObject);   
+            Destroy(gameObject);
+            GameManager.instance.CreateTile();
         }
 
     }
