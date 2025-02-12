@@ -1,19 +1,24 @@
+
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.ShaderData;
 
 public class QTE : MonoBehaviour
 {
     [Header("Params")]
-    [SerializeField] Combinaison[] combinaisons;
-    [SerializeField] float maxTime = 4;
+    public int combinationAmount;
+    [SerializeField] Combination[] combination;
+    [SerializeField] internal Combination[] combinationTable;
+    [SerializeField] float maxTime = 3;
     
     [Header("References")]
     [SerializeField] Trombonette trombonette;
     [SerializeField] UI ui;
 
-    Combinaison currentCombinaison;
-    bool lockQte = false;
-    float timer;
+    public int currentCombinationIndex = 0;
+    Combination currentCombination;
+    bool lockQte = true;
+    float timer = 1;
     
     internal delegate void QTEFailed();
     internal QTEFailed onQTEFailed;
@@ -21,34 +26,71 @@ public class QTE : MonoBehaviour
     internal delegate void QTEPassed();
     internal QTEPassed onQTEPassed;
 
-    internal void StartQTE()
+    internal delegate void QTEEnded();
+    internal QTEEnded onQTEEnded;
+
+    private void Start()
     {
-        currentCombinaison = combinaisons[Random.Range(0, combinaisons.Length)];
+        onQTEFailed += QTEFail;
+        onQTEPassed += QTEPass;
+        onQTEEnded += QTEEnd;
     }
 
-    internal void StartQTE(Combinaison combinaison)
+    internal void StartQTE()
     {
-        currentCombinaison = combinaison;
+        Debug.Log("QTE Started");
+        combinationTable = new Combination[combinationAmount];
+        for (int i = 0; i < combinationAmount; i++)
+        {
+            combinationTable[i] = combination[Random.Range(0, combination.Length)];
+            Debug.Log(combinationTable[i].ToString());
+        }
+        currentCombination = combinationTable[currentCombinationIndex];
+        lockQte = false;
+        timer = maxTime;
+
+    }
+    public void QTEPass()
+    {
+        currentCombinationIndex++;
+        if (currentCombinationIndex == 3) onQTEEnded();
+        currentCombination = combinationTable[currentCombinationIndex];
+        timer = maxTime;
+    }
+
+    public void QTEFail()
+    {
+        currentCombinationIndex++;
+        Debug.Log("Current index : " + currentCombinationIndex);
+        if (currentCombinationIndex == 3) onQTEEnded();
+        currentCombination = combinationTable[currentCombinationIndex];
+        timer = maxTime;
+    }
+
+    internal void QTEEnd()
+    {
+        lockQte = true;
+        currentCombinationIndex = 0;
     }
 
     private void Update()
     {
         if (lockQte) return;
+        else timer -= 1 * Time.deltaTime;
 
-        if(timer <= 0)
+        if (timer <= 0)
         {
-            lockQte = true;
-            //onQTEFailed();
+            Debug.Log("Failed the QTE");
+            onQTEFailed();
             return;
         }
 
-        if (trombonette.GetCombinaison().IsValid(currentCombinaison))
+        if (trombonette.blowValue >= 100 && trombonette.GetCombination().IsValid(currentCombination))
         {
-            lockQte = true;
+            Debug.Log("Passed the QTE");
             onQTEPassed();
         }
-
-        timer -= Time.deltaTime;
+        Debug.Log("lives : " + GameManager.instance.lives);
     }
 
 }
@@ -56,7 +98,7 @@ public class QTE : MonoBehaviour
 
 
 [System.Serializable]
-internal struct Combinaison
+internal struct Combination
 {
     [Tooltip("Need to hold the A button on the controller")]
     [SerializeField] internal bool isAHold;
@@ -71,22 +113,23 @@ internal struct Combinaison
     [Range(0, 100)]
     [SerializeField] internal float slideLevel;
 
-    [Tooltip("The threshold to validate the slider")]
-    [SerializeField] internal float threshold;
-
-    bool IsBetween(float asked_combinaison, float input, float t)
+    bool IsHeld(float slideLevel)
     {
-        return asked_combinaison <= input + t
-               && asked_combinaison >= input - t;
+        return slideLevel <= 50;
     }
 
-    internal bool IsValid(Combinaison combinaison)
+    internal bool IsValid(Combination Combination)
     {
         return 
-            combinaison.isAHold == isAHold 
-            && combinaison.isBHold == isBHold 
-            && combinaison.isCHold == isCHold 
-            && IsBetween(combinaison.slideLevel, slideLevel, threshold);
+            Combination.isAHold == isAHold 
+            && Combination.isBHold == isBHold 
+            && Combination.isCHold == isCHold 
+            && IsHeld(Combination.slideLevel);
+    }
+
+    public override string ToString()
+    {
+        return $"{isAHold}, {isBHold}, {isCHold}, {slideLevel}";
     }
 
 }
