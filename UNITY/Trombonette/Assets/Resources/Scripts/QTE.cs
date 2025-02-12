@@ -4,16 +4,16 @@ using UnityEngine;
 public class QTE : MonoBehaviour
 {
     [Header("Params")]
-    [SerializeField] combination[] combination;
-    [SerializeField] float maxTime = 3;
+    [SerializeField] Combinaison[] combinaisons;
+    [SerializeField] float maxTime = 4;
     
     [Header("References")]
     [SerializeField] Trombonette trombonette;
     [SerializeField] UI ui;
 
-    combination currentcombination;
-    bool lockQte = true;
-    float timer = 1;
+    Combinaison currentCombinaison;
+    bool lockQte = false;
+    float timer;
     
     internal delegate void QTEFailed();
     internal QTEFailed onQTEFailed;
@@ -23,40 +23,32 @@ public class QTE : MonoBehaviour
 
     internal void StartQTE()
     {
-        Debug.Log("QTE Started");
-        currentcombination = combination[Random.Range(0, combination.Length)];
-        lockQte = false;
-        timer = maxTime;
-        Debug.Log("Current Combination : " + currentcombination + "      timer : " + timer);
+        currentCombinaison = combinaisons[Random.Range(0, combinaisons.Length)];
     }
 
-    internal void StartQTE(combination combination)
+    internal void StartQTE(Combinaison combinaison)
     {
-        currentcombination = combination;
+        currentCombinaison = combinaison;
     }
 
     private void Update()
     {
         if (lockQte) return;
-        else timer -= 1 * Time.deltaTime;
 
-        if (timer <= 0)
+        if(timer <= 0)
         {
-            Debug.Log("In Failed ?  " + lockQte);
             lockQte = true;
-            GameManager.instance.SetTileSpeed(3);
             //onQTEFailed();
-            Debug.Log("Missed The QTE !"); 
             return;
         }
 
-        /*if ( /* trombenette.blowValue >= 100 // trombonette.isBlowing == true // trombonette.GetBlowValue() >= 100 && [* /] trombonette.Getcombination().IsValid(currentcombination))
+        if (trombonette.GetCombinaison().IsValid(currentCombinaison))
         {
             lockQte = true;
-            GameManager.instance.SetTileSpeed(3);
             onQTEPassed();
         }
-        */
+
+        timer -= Time.deltaTime;
     }
 
 }
@@ -64,7 +56,7 @@ public class QTE : MonoBehaviour
 
 
 [System.Serializable]
-internal struct combination
+internal struct Combinaison
 {
     [Tooltip("Need to hold the A button on the controller")]
     [SerializeField] internal bool isAHold;
@@ -82,19 +74,19 @@ internal struct combination
     [Tooltip("The threshold to validate the slider")]
     [SerializeField] internal float threshold;
 
-    bool IsBetween(float asked_combination, float input, float t)
+    bool IsBetween(float asked_combinaison, float input, float t)
     {
-        return asked_combination <= input + t
-               && asked_combination >= input - t;
+        return asked_combinaison <= input + t
+               && asked_combinaison >= input - t;
     }
 
-    internal bool IsValid(combination combination)
+    internal bool IsValid(Combinaison combinaison)
     {
         return 
-            combination.isAHold == isAHold 
-            && combination.isBHold == isBHold 
-            && combination.isCHold == isCHold 
-            && IsBetween(combination.slideLevel, slideLevel, threshold);
+            combinaison.isAHold == isAHold 
+            && combinaison.isBHold == isBHold 
+            && combinaison.isCHold == isCHold 
+            && IsBetween(combinaison.slideLevel, slideLevel, threshold);
     }
 
 }
