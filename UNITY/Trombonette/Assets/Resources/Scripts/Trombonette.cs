@@ -13,7 +13,7 @@ public class Trombonette : MonoBehaviour
     SerialPort serial;
 
     internal bool isAHold, isBHold, isCHold;
-    internal int slideValue;
+    internal int slideValue, blowValue;
     const int MAX_SLIDE_VALUE = 663;
 
     public void OpenCOM()
@@ -51,13 +51,14 @@ public class Trombonette : MonoBehaviour
         isBHold = (bool)obj["B"];
         isCHold = (bool)obj["C"];
 
+        blowValue = (int)obj["M"];
         slideValue = (int)((int)obj["D"]/(float)MAX_SLIDE_VALUE) * 100;
         
     }
 
-    internal Combinaison GetCombinaison()
+    internal Combination GetCombination()
     {
-        return new Combinaison()
+        return new Combination()
         {
             isAHold = isAHold,
             isBHold = isBHold,
