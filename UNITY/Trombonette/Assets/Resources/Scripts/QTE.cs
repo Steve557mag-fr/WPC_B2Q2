@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class QTE : MonoBehaviour
@@ -37,7 +38,7 @@ public class QTE : MonoBehaviour
         if(timer <= 0)
         {
             lockQte = true;
-            onQTEFailed();
+            //onQTEFailed();
             return;
         }
 
@@ -52,29 +53,40 @@ public class QTE : MonoBehaviour
 
 }
 
+
+
 [System.Serializable]
 internal struct Combinaison
 {
     [Tooltip("Need to hold the A button on the controller")]
     [SerializeField] internal bool isAHold;
-    
+
     [Tooltip("Need to hold the B button on the controller")]
     [SerializeField] internal bool isBHold;
-    
+
     [Tooltip("Need to hold the C button on the controller")]
     [SerializeField] internal bool isCHold;
 
     [Tooltip("The level of slide you need to achieve this combinaison. Between 0 and 100")]
-    [Range(0,100)]
+    [Range(0, 100)]
     [SerializeField] internal float slideLevel;
 
-    internal bool IsValid(Combinaison other)
+    [Tooltip("The threshold to validate the slider")]
+    [SerializeField] internal float threshold;
+
+    bool IsBetween(float asked_combinaison, float input, float t)
+    {
+        return asked_combinaison <= input + t
+               && asked_combinaison >= input - t;
+    }
+
+    internal bool IsValid(Combinaison combinaison)
     {
         return 
-            other.isAHold == isAHold 
-            && other.isBHold == isBHold 
-            && other.isCHold == isCHold 
-            && other.slideLevel >= slideLevel;
+            combinaison.isAHold == isAHold 
+            && combinaison.isBHold == isBHold 
+            && combinaison.isCHold == isCHold 
+            && IsBetween(combinaison.slideLevel, slideLevel, threshold);
     }
 
 }
