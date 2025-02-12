@@ -3,7 +3,27 @@ guid: a990c252369d8494fa5fa5024044b1c5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Duck
+    second: {fileID: 2100000, guid: 0df153229718de244a4d11a4818fa273, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyes.001
+    second: {fileID: 2100000, guid: 45cf991def5779342b80d461d48d91af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: orange
+    second: {fileID: 2100000, guid: 7f2a4c940ee39af4a974e9fc51fd8a9d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: orange.001
+    second: {fileID: 2100000, guid: 7f2a4c940ee39af4a974e9fc51fd8a9d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
