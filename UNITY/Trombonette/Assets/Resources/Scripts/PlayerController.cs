@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "EventTrigger")
         {
+            GameManager.instance.SetTileSpeed(0);
             Canvas.GetComponent<QTE>().StartQTE();
-            GameManager.instance.SetTileSpeed(1);
         }
     }
 }

@@ -788,7 +788,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1558870947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb934dee49a17b34e9bd2a3990152502, type: 3}
+  m_Script: {fileID: 11500000, guid: 6024bcf6e916e6142888ea51705d5468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Canvas: {fileID: 1635297017}
@@ -1004,6 +1004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1635297019}
   - component: {fileID: 1635297020}
+  - component: {fileID: 1635297021}
   m_Layer: 0
   m_Name: Trombonette
   m_TagString: Untagged
@@ -1039,15 +1040,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8707f124ac8021546a538d82317d72ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combinationAmount: 4
   combination:
-  - isAHold: 0
+  - isAHold: 1
     isBHold: 0
     isCHold: 0
+    slideLevel: 100
+  - isAHold: 1
+    isBHold: 1
+    isCHold: 0
     slideLevel: 0
-    threshold: 0
+  - isAHold: 1
+    isBHold: 1
+    isCHold: 1
+    slideLevel: 100
+  - isAHold: 0
+    isBHold: 1
+    isCHold: 1
+    slideLevel: 0
+  - isAHold: 1
+    isBHold: 0
+    isCHold: 1
+    slideLevel: 100
+  - isAHold: 0
+    isBHold: 1
+    isCHold: 0
+    slideLevel: 100
+  - isAHold: 0
+    isBHold: 0
+    isCHold: 1
+    slideLevel: 0
+  combinationTable: []
   maxTime: 3
-  trombonette: {fileID: 0}
+  trombonette: {fileID: 1635297021}
   ui: {fileID: 0}
+  currentCombinationIndex: 0
+--- !u!114 &1635297021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635297017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ac21c206261bc4d9be959c253c024c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textDebug: {fileID: 0}
+  COMName: COMC
+  COMBitrate: 9600
 --- !u!1001 &1763889964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1142,6 +1184,9 @@ MonoBehaviour:
   - {fileID: 35452403}
   - {fileID: 615076548}
   - {fileID: 1092135795}
+  qte: {fileID: 1635297020}
+  ui: {fileID: 0}
+  lives: 10
 --- !u!4 &1928662427
 Transform:
   m_ObjectHideFlags: 0
