@@ -14,6 +14,7 @@ public class Trombonette : MonoBehaviour
 
     internal bool isAHold, isBHold, isCHold;
     internal int slideValue;
+    internal float slideThreshold;
     const int MAX_SLIDE_VALUE = 663;
 
     public void OpenCOM()
