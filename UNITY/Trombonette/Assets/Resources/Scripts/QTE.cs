@@ -19,6 +19,7 @@ public class QTE : MonoBehaviour
     Combination currentCombination;
     bool lockQte = true;
     float timer = 1;
+    public int score = 0;
     
     internal delegate void QTEFailed();
     internal QTEFailed onQTEFailed;
@@ -57,6 +58,7 @@ public class QTE : MonoBehaviour
     public void QTEPass()
     {
         currentCombinationIndex++;
+        score++;
         if (currentCombinationIndex >= combinationAmount)
         {
             onQTEEnded();
