@@ -14,6 +14,18 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> instantiatedTiles;
 
+    [SerializeField] QTE qte;
+    [SerializeField] UI ui;
+
+    [Header("Player")]
+    public int lives = 3;
+    
+    private void Start()
+    {
+        qte.onQTEFailed += Fail;
+        qte.onQTEPassed += Pass;
+    }
+
     public void CreateTile()
     {
         int rand = Random.Range(0, tiles.Count);
@@ -27,6 +39,25 @@ public class GameManager : MonoBehaviour
         {
             i.GetComponent<Tile>().speed = speed;
         }
+    }
+
+    public void Pass()
+    {
+        // QTE.currentCombinationIndex--;
+        // QTE.NextCombination
+    }
+
+    public void Fail()
+    {
+
+        lives--;
+        if (lives == 0) EndGame();
+        // QTE.currentCombinationIndex--;
+        // QTE.NextCombination
+    }
+    public void EndGame()
+    {
+
     }
 
     static internal GameManager instance => FindAnyObjectByType<GameManager>();

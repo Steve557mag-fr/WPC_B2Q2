@@ -1,16 +1,20 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QTE : MonoBehaviour
 {
     [Header("Params")]
+    public int combinationAmount;
     [SerializeField] Combination[] combination;
+    [SerializeField] Combination[] combinationTable;
     [SerializeField] float maxTime = 3;
     
     [Header("References")]
     [SerializeField] Trombonette trombonette;
     [SerializeField] UI ui;
 
+    int currentCombinationIndex;
     Combination currentCombination;
     bool lockQte = true;
     float timer = 1;
@@ -21,18 +25,29 @@ public class QTE : MonoBehaviour
     internal delegate void QTEPassed();
     internal QTEPassed onQTEPassed;
 
+    private void Start()
+    {
+        
+    }
+
     internal void StartQTE()
     {
         Debug.Log("QTE Started");
-        currentCombination = combination[Random.Range(0, combination.Length)];
+        combinationTable = new Combination[combinationAmount];
+        for (int i = 0; i < combinationAmount; i++)
+        {
+            combinationTable[i] = combination[Random.Range(0, combination.Length)];
+        }
         lockQte = false;
         timer = maxTime;
-        Debug.Log("Current Combination : " + currentCombination + "      timer : " + timer);
+
     }
 
-    internal void StartQTE(Combination Combination)
+    internal void EndQTE()
     {
-        currentCombination = Combination;
+        GameManager.instance.SetTileSpeed(3);
+        lockQte = true;
+        currentCombinationIndex = combinationAmount;
     }
 
     private void Update()
@@ -42,21 +57,18 @@ public class QTE : MonoBehaviour
 
         if (timer <= 0)
         {
-            Debug.Log("In Failed ?  " + lockQte);
-            lockQte = true;
-            GameManager.instance.SetTileSpeed(3);
-            //onQTEFailed();
-            Debug.Log("Missed The QTE !");
+            Debug.Log("Failed the QTE");
+            onQTEFailed();
+            if(currentCombinationIndex == 0) EndQTE();
             return;
         }
 
-        /*if ( /* trombenette.blowValue >= 100 // trombonette.isBlowing == true // trombonette.GetBlowValue() >= 100 && [* /] trombonette.Getcombination().IsValid(currentcombination))
+        if (trombonette.blowValue >= 100 && trombonette.GetCombination().IsValid(currentCombination))
         {
-            lockQte = true;
-            GameManager.instance.SetTileSpeed(3);
+            Debug.Log("Passed the QTE");
             onQTEPassed();
         }
-        */
+        
     }
 
 }
