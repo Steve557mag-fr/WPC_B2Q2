@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -70,6 +71,9 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("highScore", highScore);
             PlayerPrefs.Save();
         }
+
+        
+        ui.GameOver();
 
         //afficher ui end game nullos t'as perdu
     }

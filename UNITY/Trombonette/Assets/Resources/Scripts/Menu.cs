@@ -9,7 +9,7 @@ public class Menu : MonoBehaviour
 
     private void Start()
     {
-        textHighScore.text = PlayerPrefs.GetInt("highScore").ToString();
+        textHighScore.text = $"hscore = {PlayerPrefs.GetInt("highScore")}";
     }
 
     public void LoadScene(string sceneName)

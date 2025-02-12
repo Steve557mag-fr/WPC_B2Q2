@@ -1,7 +1,6 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.ShaderData;
 
 public class QTE : MonoBehaviour
 {

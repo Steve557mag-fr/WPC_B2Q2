@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
@@ -25,10 +27,30 @@ public class UI : MonoBehaviour
     [SerializeField] Sprite noteBlue, noteRed;
 
 
+    [Header("_GameOver_")]
+    [SerializeField] GameObject gameoverContainer;
+
     [Header("_References_")]
     [SerializeField] Trombonette trombonette;
     [SerializeField] GameManager gameManager;
     [SerializeField] QTE QTE;
+
+    internal void GameOver()
+    {
+        trombonette.CloseCOM();
+        gameoverContainer.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void Back()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
 
     private void Update()
     {
