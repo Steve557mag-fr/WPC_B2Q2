@@ -55,9 +55,9 @@ public class Trombonette : MonoBehaviour
         
     }
 
-    internal Combination GetCombination()
+    internal Combinaison GetCombinaison()
     {
-        return new Combination()
+        return new Combinaison()
         {
             isAHold = isAHold,
             isBHold = isBHold,
