@@ -21,6 +21,5 @@ public class Tile : MonoBehaviour
             GameManager.instance.instantiatedTiles.Remove(gameObject);
             GameManager.instance.CreateTile();
         }
-        Debug.Log(speed);
     }
 }
