@@ -1,8 +1,8 @@
 #include <Arduino_JSON.h>
 
-#define A 8    // A : bouton A (digital  ; bool)
-#define B 7    // b : bouton B (digital  ; bool)
-#define C 6    // c : bouton C (digidal  ; bool)
+#define A 11    // A : bouton A (digital  ; bool)
+#define B 12    // b : bouton B (digital  ; bool)
+#define C 13    // c : bouton C (digidal  ; bool)
 #define D 1     // d : slide (analog   ; int)
 #define M 0     // m : sound sensor (analog)
 
