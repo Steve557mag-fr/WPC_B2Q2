@@ -425,6 +425,7 @@ MonoBehaviour:
   inputA: {fileID: 1001507189}
   inputB: {fileID: 2074061806}
   inputC: {fileID: 1345678207}
+  scoreText: {fileID: 2121496204}
   lifeA: {fileID: 1455948690}
   lifeB: {fileID: 1931163928}
   lifeC: {fileID: 51419796}
@@ -2996,10 +2997,11 @@ MonoBehaviour:
     isCHold: 1
     slideLevel: 0
   combinationTable: []
-  maxTime: 10
+  maxTime: 5
   trombonette: {fileID: 1635297021}
   ui: {fileID: 67666764}
   currentCombinationIndex: 0
+  score: 0
 --- !u!114 &1635297021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3091,6 +3093,7 @@ MonoBehaviour:
   qte: {fileID: 1635297020}
   ui: {fileID: 67666764}
   lives: 3
+  highScore: 0
 --- !u!4 &1928662427
 Transform:
   m_ObjectHideFlags: 0

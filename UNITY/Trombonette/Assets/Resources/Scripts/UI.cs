@@ -11,6 +11,7 @@ public class UI : MonoBehaviour
     [SerializeField] Image inputC;
 
     [Header("_Lifes_")]
+    [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] Image lifeA;
     [SerializeField] Image lifeB;
     [SerializeField] Image lifeC;
@@ -35,6 +36,9 @@ public class UI : MonoBehaviour
         inputA.color = trombonette.blowValue >= trombonette.threslholdBlow && trombonette.isAHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
         inputB.color = trombonette.blowValue >= trombonette.threslholdBlow && trombonette.isBHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
         inputC.color = trombonette.blowValue >= trombonette.threslholdBlow && trombonette.isCHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
+
+        // score
+        scoreText.text = QTE.score.ToString();
 
         //health
         lifeA.sprite = gameManager.lives >= 1 ? LifeOn : LifeOff;

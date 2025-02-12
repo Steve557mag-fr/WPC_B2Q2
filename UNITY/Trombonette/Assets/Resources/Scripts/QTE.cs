@@ -89,7 +89,7 @@ public class QTE : MonoBehaviour
     private void Update()
     {
         if (lockQte) return;
-        //else timer -= 1 * Time.deltaTime;
+        else timer -= 1 * Time.deltaTime;
 
         if (timer <= 0)
         {
