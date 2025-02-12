@@ -7,7 +7,7 @@ public class QTE : MonoBehaviour
 {
     [Header("Params")]
     public int combinationAmount;
-    [SerializeField] Combination[] combination;
+    [SerializeField] Combination[] combinations;
     [SerializeField] internal Combination[] combinationTable;
     [SerializeField] float maxTime = 3;
     
@@ -29,6 +29,9 @@ public class QTE : MonoBehaviour
     internal delegate void QTEEnded();
     internal QTEEnded onQTEEnded;
 
+    internal bool isQTEActive => !lockQte;
+    internal float timeLeft => timer;
+
     private void Start()
     {
         onQTEFailed += QTEFail;
@@ -42,10 +45,11 @@ public class QTE : MonoBehaviour
         combinationTable = new Combination[combinationAmount];
         for (int i = 0; i < combinationAmount; i++)
         {
-            combinationTable[i] = combination[Random.Range(0, combination.Length)];
-            Debug.Log(combinationTable[i].ToString());
+            combinationTable[i] = combinations[Random.Range(0, combinations.Length)];
         }
+
         currentCombination = combinationTable[currentCombinationIndex];
+        currentCombinationIndex = 0;
         lockQte = false;
         timer = maxTime;
 
@@ -53,7 +57,11 @@ public class QTE : MonoBehaviour
     public void QTEPass()
     {
         currentCombinationIndex++;
-        if (currentCombinationIndex == 3) onQTEEnded();
+        if (currentCombinationIndex >= combinationAmount)
+        {
+            onQTEEnded();
+            return;
+        }
         currentCombination = combinationTable[currentCombinationIndex];
         timer = maxTime;
     }
@@ -61,8 +69,11 @@ public class QTE : MonoBehaviour
     public void QTEFail()
     {
         currentCombinationIndex++;
-        Debug.Log("Current index : " + currentCombinationIndex);
-        if (currentCombinationIndex == 3) onQTEEnded();
+        if (currentCombinationIndex >= combinationAmount)
+        {
+            onQTEEnded();
+            return;
+        }
         currentCombination = combinationTable[currentCombinationIndex];
         timer = maxTime;
     }
@@ -76,7 +87,7 @@ public class QTE : MonoBehaviour
     private void Update()
     {
         if (lockQte) return;
-        else timer -= 1 * Time.deltaTime;
+        //else timer -= 1 * Time.deltaTime;
 
         if (timer <= 0)
         {
@@ -85,12 +96,14 @@ public class QTE : MonoBehaviour
             return;
         }
 
-        if (trombonette.blowValue >= 100 && trombonette.GetCombination().IsValid(currentCombination))
+        print("comb: " + trombonette.GetCombination());
+
+        if (trombonette.blowValue >= trombonette.threslholdBlow && trombonette.GetCombination().IsValid(currentCombination))
         {
             Debug.Log("Passed the QTE");
             onQTEPassed();
         }
-        Debug.Log("lives : " + GameManager.instance.lives);
+        //Debug.Log("lives : " + GameManager.instance.lives);
     }
 
 }
@@ -115,16 +128,16 @@ internal struct Combination
 
     bool IsHeld(float slideLevel)
     {
-        return slideLevel <= 50;
+        return true;//slideLevel <= 50;
     }
 
     internal bool IsValid(Combination Combination)
     {
-        return 
-            Combination.isAHold == isAHold 
-            && Combination.isBHold == isBHold 
-            && Combination.isCHold == isCHold 
-            && IsHeld(Combination.slideLevel);
+        return
+            Combination.isAHold == isAHold
+            && Combination.isBHold == isBHold
+            && Combination.isCHold == isCHold;
+            //&& IsHeld(Combination.slideLevel);
     }
 
     public override string ToString()
