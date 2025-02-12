@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Player")]
     public int lives = 10;
+    public int highScore;
     
     private void Start()
     {
@@ -60,6 +63,18 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("c'est finit");
         Time.timeScale = 0;
+        highScore = qte.score;
+        qte.score = 0;
+
+        if(qte.score >= PlayerPrefs.GetInt("highScore"))
+        {
+            PlayerPrefs.SetInt("highScore", highScore);
+            PlayerPrefs.Save();
+        }
+
+        
+        ui.GameOver();
+
         //afficher ui end game nullos t'as perdu
     }
 

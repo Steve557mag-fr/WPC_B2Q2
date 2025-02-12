@@ -15,6 +15,7 @@ public class Trombonette : MonoBehaviour
     internal bool isAHold, isBHold, isCHold;
     internal int slideValue, blowValue;
     const int MAX_SLIDE_VALUE = 663;
+    internal int threslholdBlow = 55;
 
     public void OpenCOM()
     {
@@ -45,7 +46,7 @@ public class Trombonette : MonoBehaviour
         if (serial == null || !serial.IsOpen) return;
 
         JObject obj = JObject.Parse(serial.ReadLine());
-        textDebug.text = $"data: {obj}";
+        //textDebug.text = $"data: {obj}";
 
         isAHold = (bool)obj["A"];
         isBHold = (bool)obj["B"];
@@ -56,9 +57,9 @@ public class Trombonette : MonoBehaviour
         
     }
 
-    internal Combinaison GetCombinaison()
+    internal Combination GetCombination()
     {
-        return new Combinaison()
+        return new Combination()
         {
             isAHold = isAHold,
             isBHold = isBHold,

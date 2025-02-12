@@ -1,16 +1,94 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using System;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    [Header("_Inputs_")]
+    [SerializeField] Image inputA;
+    [SerializeField] Image inputB;
+    [SerializeField] Image inputC;
+
+    [Header("_Lifes_")]
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] Image lifeA;
+    [SerializeField] Image lifeB;
+    [SerializeField] Image lifeC;
+    [SerializeField] Sprite LifeOn, LifeOff;
+
+    [Header("_Grid_")]
+    [SerializeField] Image gridSucess;
+    [SerializeField] GameObject gridContainer;
+    [SerializeField] TextMeshProUGUI gridTextInfo;
+    [SerializeField] GameObject[] gridLine;
+    [SerializeField] Sprite noteBlue, noteRed;
+
+
+    [Header("_GameOver_")]
+    [SerializeField] GameObject gameoverContainer;
+
+    [Header("_References_")]
+    [SerializeField] Trombonette trombonette;
+    [SerializeField] GameManager gameManager;
+    [SerializeField] QTE QTE;
+
+    internal void GameOver()
     {
-        
+        trombonette.CloseCOM();
+        gameoverContainer.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Restart()
     {
-        
+        SceneManager.LoadScene("SampleScene");
     }
+
+    public void Back()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+
+    private void Update()
+    {
+        // inputs
+        inputA.color = trombonette.blowValue >= trombonette.threslholdBlow && trombonette.isAHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
+        inputB.color = trombonette.blowValue >= trombonette.threslholdBlow && trombonette.isBHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
+        inputC.color = trombonette.blowValue >= trombonette.threslholdBlow && trombonette.isCHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
+
+        // score
+        scoreText.text = QTE.score.ToString();
+
+        //health
+        lifeA.sprite = gameManager.lives >= 1 ? LifeOn : LifeOff;
+        lifeB.sprite = gameManager.lives >= 2 ? LifeOn : LifeOff;
+        lifeC.sprite = gameManager.lives >= 3 ? LifeOn : LifeOff;
+
+        //grid
+        if (QTE.isQTEActive)
+        {
+            // status
+            gridSucess.color = 
+                QTE.combinationTable[QTE.currentCombinationIndex].IsValid(trombonette.GetCombination()) 
+                ? Color.green : Color.white;
+
+            gridContainer.SetActive(true);
+            for (int i = 0; i < gridLine.Length; i++)
+            {
+                Combination comb = QTE.combinationTable[i];
+                gridLine[i].transform.Find("A").gameObject.GetComponent<Image>().color = comb.isAHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
+                gridLine[i].transform.Find("B").gameObject.GetComponent<Image>().color = comb.isBHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
+                gridLine[i].transform.Find("C").gameObject.GetComponent<Image>().color = comb.isCHold ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0);
+            }
+
+        }
+        else gridContainer.SetActive(false);
+        gridTextInfo.text = $"status:{QTE.isQTEActive}\nQTE_ID:{QTE.currentCombinationIndex}\ntime:{QTE.timeLeft}";
+
+    }
+
+
 }
